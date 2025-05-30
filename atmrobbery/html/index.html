@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Hacking</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="phone-container">
+        <img src="pc-phone-frame.png" id="phone-frame" />
+        <div id="screen">
+            <div id="boot-screen" class="screen-content">
+                <p id="boot-text">Phone booting.. please wait</p>
+                <div id="boot-progress">
+                    <div id="progress-bar"></div>
+                </div>
+            </div>
+            <div id="login-screen" class="screen-content hidden">
+                <p class="green-text">Welcome to AnoPhone</p>
+                <input type="text" id="username" placeholder="Username" />
+                <input type="password" id="password" placeholder="Password" />
+                <button id="login-btn">Login</button>
+            </div>
+            <div id="connected-screen" class="screen-content hidden">
+                <p class="green-text glitch">Phone connected</p>
+            </div>
+            <div id="command-screen" class="screen-content hidden">
+                <p class="green-text">Enter command:</p>
+                <input type="text" id="command-input" autocomplete="off" />
+                <button id="submit-btn">Enter</button>
+            </div>
+            <div id="result-screen" class="screen-content hidden">
+                <p id="result-text"></p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
