@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AnoPhone ATM Hack</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="phone-frame">
+        <img src="pc-phone-frame.png" alt="Phone Frame" id="frame-img" />
+        <div id="phone-screen">
+            <div id="boot-screen" class="screen-content">
+                <div id="boot-text">Booting AnoPhone...</div>
+                <div id="progress-bar-container"><div id="progress-bar"></div></div>
+            </div>
+
+            <div id="login-screen" class="screen-content hidden">
+                <h2>Welcome to AnoPhone</h2>
+                <input type="text" id="username" placeholder="Username" autocomplete="off" />
+                <input type="password" id="password" placeholder="Password" autocomplete="off" />
+                <button id="login-btn">Login</button>
+            </div>
+
+            <div id="connected-screen" class="screen-content hidden">
+                <h2>Phone connected</h2>
+                <div class="glitch">Glitch effect...</div>
+            </div>
+
+            <div id="command-screen" class="screen-content hidden">
+                <input type="text" id="command-input" placeholder="Enter command" autocomplete="off" />
+                <button id="submit-btn">Submit</button>
+            </div>
+
+            <div id="result-screen" class="screen-content hidden">
+                <div id="result-text"></div>
+                <button id="close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

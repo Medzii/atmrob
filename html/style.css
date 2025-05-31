@@ -1,0 +1,113 @@
+body, html {
+    margin: 0; padding: 0; background: transparent; overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: lime;
+}
+
+#phone-frame {
+    position: fixed;
+    width: 400px;
+    height: 720px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+}
+
+#frame-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#phone-screen {
+    position: absolute;
+    top: 6.5%; /* Adjust to fit inside frame */
+    left: 12.5%;
+    width: 75%;
+    height: 86.5%;
+    background: url('phone-bg.jpg') no-repeat center center / cover;
+    border-radius: 20px;
+    box-shadow: inset 0 0 20px 2px #00ff00aa;
+    overflow: hidden;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.screen-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Boot Screen */
+#boot-text {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    text-align: center;
+    user-select: none;
+}
+
+#progress-bar-container {
+    width: 80%;
+    height: 20px;
+    border: 2px solid lime;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#progress-bar {
+    height: 100%;
+    width: 0%;
+    background: lime;
+    transition: width 0.3s ease;
+}
+
+/* Login */
+#login-screen input {
+    width: 80%;
+    margin: 5px 0;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #000000bb;
+    color: lime;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+#login-btn {
+    margin-top: 10px;
+    padding: 10px 25px;
+    background: lime;
+    border: none;
+    border-radius: 15px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#login-btn:hover {
+    background: #00cc00;
+}
+
+/* Connected screen glitch effect */
+#connected-screen .glitch {
+    font-size: 1.3em;
+    animation: glitch 1.5s infinite;
+    user-select: none;
+}
+
+@keyframes glitch {
+    0% {
+        text-shadow: 2px 0 red;
+    }
+   
