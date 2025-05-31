@@ -1,46 +1,44 @@
+js
 let currentStep = 0;
 
 window.addEventListener('message', (event) => {
     const data = event.data;
     if (data.action === "startBoot") startBoot();
-    else if (data.action === "showConnected") {
+    if (data.action === "showConnected") {
         showScreen('connected-screen');
         setTimeout(() => {
             showScreen('command-screen');
             currentStep = 1;
         }, 2000);
     }
-    else if (data.action === "command2") {
+    if (data.action === "command2") {
+        showScreen('command-screen');
         currentStep = 2;
-        showResult('Success! Enter next command.');
-        setTimeout(() => {
-            showScreen('command-screen');
-        }, 2000);
     }
-    else if (data.action === "success") {
-        showResult('Hack succeeded!');
-        setTimeout(() => closeUI(), 3000);
-    }
-    else if (data.action === "fail") {
-        showResult('Hack failed.');
-        setTimeout(() => closeUI(), 3000);
-    }
-    else if (data.action === "close") {
-        closeUI();
+    if (data.action === "success") showScreen('success-screen');
+    if (data.action === "fail") showScreen('fail-screen');
+    if (data.action === "close") {
+        document.getElementById('ui').style.display = 'none';
     }
 });
 
+function showScreen(id) {
+    document.querySelectorAll('.screen-content').forEach(el => el.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+}
+
 function startBoot() {
+    document.getElementById('ui').style.display = 'block';
     showScreen('boot-screen');
     let progress = 0;
     const interval = setInterval(() => {
-        progress += 2;
+        progress += 5;
         document.getElementById('progress-bar').style.width = `${progress}%`;
         if (progress >= 100) {
             clearInterval(interval);
             showScreen('login-screen');
         }
-    }, 100);
+    }, 200);
 }
 
 document.getElementById('login-btn').addEventListener('click', () => {
@@ -48,7 +46,7 @@ document.getElementById('login-btn').addEventListener('click', () => {
     const password = document.getElementById('password').value;
     fetch(`https://${GetParentResourceName()}/submitLogin`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ username, password })
     });
 });
@@ -57,39 +55,19 @@ document.getElementById('submit-btn').addEventListener('click', () => {
     const command = document.getElementById('command-input').value;
     fetch(`https://${GetParentResourceName()}/submitCommand`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ command })
     });
 });
 
 document.getElementById('close-btn').addEventListener('click', () => {
     fetch(`https://${GetParentResourceName()}/closeUI`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({})
+        method: 'POST'
     });
 });
 
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
-        fetch(`https://${GetParentResourceName()}/closeUI`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({})
-        });
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        fetch(`https://${GetParentResourceName()}/closeUI`, { method: 'POST' });
     }
 });
-
-function showResult(text) {
-    document.getElementById('result-text').textContent = text;
-    showScreen('result-screen');
-}
-
-function showScreen(id) {
-    document.querySelectorAll('.screen-content').forEach(el => el.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-}
-
-function closeUI() {
-    document.querySelectorAll('.screen-content').forEach(el => el.classList.add('hidden'));
-}

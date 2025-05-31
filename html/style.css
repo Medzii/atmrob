@@ -1,113 +1,95 @@
 body, html {
-    margin: 0; padding: 0; background: transparent; overflow: hidden;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: lime;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: monospace, monospace;
+    background: transparent;
+}
+
+#ui {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    z-index: 99999;
 }
 
 #phone-frame {
-    position: fixed;
-    width: 400px;
-    height: 720px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    user-select: none;
-}
-
-#frame-img {
     position: absolute;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
+    user-select: none;
 }
 
-#phone-screen {
+#phone-bg {
     position: absolute;
-    top: 6.5%; /* Adjust to fit inside frame */
-    left: 12.5%;
-    width: 75%;
-    height: 86.5%;
-    background: url('phone-bg.jpg') no-repeat center center / cover;
-    border-radius: 20px;
-    box-shadow: inset 0 0 20px 2px #00ff00aa;
-    overflow: hidden;
-    padding: 15px;
-    box-sizing: border-box;
+    top: 50px;
+    left: 28px;
+    width: 345px
+;
+height: 600px;
+background: url('phone-bg.jpg') no-repeat center center;
+background-size: cover;
+z-index: -1;
+border-radius: 20px;
+}
+
+#app {
+position: absolute;
+top: 60px;
+left: 40px;
+width: 320px;
+height: 580px;
+color: white;
+background: rgba(0,0,0,0.7);
+border-radius: 20px;
+padding: 15px;
 }
 
 .screen-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+display: none;
 }
 
-.hidden {
-    display: none !important;
+.screen-content.active {
+display: block;
 }
 
-/* Boot Screen */
-#boot-text {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    text-align: center;
-    user-select: none;
-}
-
-#progress-bar-container {
-    width: 80%;
-    height: 20px;
-    border: 2px solid lime;
-    border-radius: 10px;
-    overflow: hidden;
+#progress-container {
+width: 100%;
+background: #333;
+height: 20px;
+border-radius: 10px;
+margin-top: 20px;
 }
 
 #progress-bar {
-    height: 100%;
-    width: 0%;
-    background: lime;
-    transition: width 0.3s ease;
+height: 100%;
+background: limegreen;
+width: 0%;
+border-radius: 10px;
+transition: width 0.3s ease;
 }
 
-/* Login */
-#login-screen input {
-    width: 80%;
-    margin: 5px 0;
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: #000000bb;
-    color: lime;
-    font-size: 1.2em;
-    text-align: center;
+button {
+margin-top: 10px;
+padding: 10px;
+background: limegreen;
+border: none;
+border-radius: 10px;
+cursor: pointer;
 }
 
-#login-btn {
-    margin-top: 10px;
-    padding: 10px 25px;
-    background: lime;
-    border: none;
-    border-radius: 15px;
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease;
+input {
+display: block;
+margin-top: 10px;
+padding: 10px;
+width: 100%;
+border-radius: 10px;
+border: none;
 }
-
-#login-btn:hover {
-    background: #00cc00;
-}
-
-/* Connected screen glitch effect */
-#connected-screen .glitch {
-    font-size: 1.3em;
-    animation: glitch 1.5s infinite;
-    user-select: none;
-}
-
-@keyframes glitch {
-    0% {
-        text-shadow: 2px 0 red;
-    }
-   

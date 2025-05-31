@@ -4,39 +4,50 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AnoPhone ATM Hack</title>
+    <title>ATM Hack</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div id="phone-frame">
-        <img src="pc-phone-frame.png" alt="Phone Frame" id="frame-img" />
-        <div id="phone-screen">
-            <div id="boot-screen" class="screen-content">
-                <div id="boot-text">Booting AnoPhone...</div>
-                <div id="progress-bar-container"><div id="progress-bar"></div></div>
+    <div id="ui" style="display:none;">
+        <img src="pc-phone-frame.png" id="phone-frame" />
+        <div id="phone-bg"></div>
+
+        <div id="app">
+            <div class="screen-content hidden" id="boot-screen">
+                <h2>Booting system...</h2>
+                <div id="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
             </div>
 
-            <div id="login-screen" class="screen-content hidden">
-                <h2>Welcome to AnoPhone</h2>
-                <input type="text" id="username" placeholder="Username" autocomplete="off" />
-                <input type="password" id="password" placeholder="Password" autocomplete="off" />
-                <button id="login-btn">Login</button>
+            <div class="screen-content hidden" id="login-screen">
+                <h2>Login</h2>
+                <input id="username" placeholder="Username" autocomplete="off" />
+                <input id="password" type="password" placeholder="Password" autocomplete="off" />
+                <button id="login-btn">Logga in</button>
             </div>
 
-            <div id="connected-screen" class="screen-content hidden">
-                <h2>Phone connected</h2>
-                <div class="glitch">Glitch effect...</div>
+            <div class="screen-content hidden" id="connected-screen">
+                <h2>Connected</h2>
+                <p>Välkommen! Skriv kommando.</p>
             </div>
 
-            <div id="command-screen" class="screen-content hidden">
-                <input type="text" id="command-input" placeholder="Enter command" autocomplete="off" />
-                <button id="submit-btn">Submit</button>
+            <div class="screen-content hidden" id="command-screen">
+                <input id="command-input" placeholder="Ange kommando..." autocomplete="off" />
+                <button id="submit-btn">Skicka</button>
             </div>
 
-            <div id="result-screen" class="screen-content hidden">
-                <div id="result-text"></div>
-                <button id="close-btn">Close</button>
+            <div class="screen-content hidden" id="success-screen">
+                <h2>Lyckades!</h2>
+                <p>Du har fått pengar!</p>
             </div>
+
+            <div class="screen-content hidden" id="fail-screen">
+                <h2>Misslyckades!</h2>
+                <p>Hackningen misslyckades.</p>
+            </div>
+
+            <button id="close-btn">Stäng</button>
         </div>
     </div>
 
