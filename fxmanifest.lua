@@ -19,4 +19,6 @@ files {
     'html/index.html',
     'html/script.js',
     'html/style.css',
+    'html/pc-phone-frame.png'
+    'html/phone-bg.jpg'
 }

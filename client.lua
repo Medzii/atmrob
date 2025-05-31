@@ -6,10 +6,10 @@ local atmModels = {
 }
 
 local hackingInProgress = false
-local loginStep = 0 -- 0=boot,1=login,2=connected,3=cmd1,4=cmd2
+local loginStep = 0
 local phoneProp = nil
+local uiOpen = false
 
--- Animation config
 local animDict = "anim@heists@prison_heiststation@cop_reactions"
 local animName = "cop_b_idle"
 
@@ -31,10 +31,8 @@ end)
 
 local function playHackAnimation()
     local playerPed = PlayerPedId()
-
     RequestAnimDict(animDict)
     while not HasAnimDictLoaded(animDict) do Wait(10) end
-
     TaskPlayAnim(playerPed, animDict, animName, 8.0, -8, -1, 49, 0, false, false, false)
 
     local model = GetHashKey("prop_phone_ing")
@@ -89,14 +87,25 @@ RegisterNetEvent("atmrobbery:attemptHack", function()
         hackingInProgress = true
         loginStep = 0
         playHackAnimation()
+
         SetNuiFocus(true, true)
         SendNUIMessage({ action = "startBoot" })
+        uiOpen = true
     end)
+end)
+
+RegisterNUICallback("closeUI", function(data, cb)
+    hackingInProgress = false
+    loginStep = 0
+    SetNuiFocus(false, false)
+    stopHackAnimation()
+    SendNUIMessage({ action = "close" })
+    uiOpen = false
+    cb("ok")
 end)
 
 RegisterNUICallback("submitLogin", function(data, cb)
     if loginStep ~= 1 then cb("ok") return end
-
     local username = data.username or ""
     local password = data.password or ""
 
@@ -109,6 +118,7 @@ RegisterNUICallback("submitLogin", function(data, cb)
         SetNuiFocus(false, false)
         stopHackAnimation()
         SendNUIMessage({ action = "close" })
+        uiOpen = false
         QBCore.Functions.Notify("Fel användarnamn eller lösenord!", "error")
     end
     cb("ok")
@@ -128,6 +138,7 @@ RegisterNUICallback("submitCommand", function(data, cb)
             SetNuiFocus(false, false)
             stopHackAnimation()
             SendNUIMessage({ action = "close" })
+            uiOpen = false
             QBCore.Functions.Notify("Fel kommando! Börja om.", "error")
         end
     elseif loginStep == 3 then
@@ -141,6 +152,7 @@ RegisterNUICallback("submitCommand", function(data, cb)
             SetNuiFocus(false, false)
             stopHackAnimation()
             SendNUIMessage({ action = "close" })
+            uiOpen = false
             QBCore.Functions.Notify("Fel kommando! Börja om.", "error")
         end
     end
@@ -154,6 +166,7 @@ RegisterNetEvent("atmrobbery:hackingResult", function(success)
     SetNuiFocus(false, false)
     stopHackAnimation()
     SendNUIMessage({ action = success and "success" or "fail" })
+    uiOpen = false
 
     if success then
         QBCore.Functions.Notify("Hackningen lyckades! Du fick pengar.", "success")
@@ -162,26 +175,18 @@ RegisterNetEvent("atmrobbery:hackingResult", function(success)
     end
 end)
 
-RegisterNUICallback("closeUI", function(data, cb)
-    hackingInProgress = false
-    loginStep = 0
-    SetNuiFocus(false, false)
-    stopHackAnimation()
-    SendNUIMessage({ action = "close" })
-    cb("ok")
-end)
-
--- ESC stängning
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
-        if hackingInProgress and IsControlJustPressed(0, 322) then -- ESC knapp
-            hackingInProgress = false
-            loginStep = 0
-            SetNuiFocus(false, false)
-            stopHackAnimation()
-            SendNUIMessage({ action = "close" })
-            QBCore.Functions.Notify("Hackningen avbröts.", "error")
+        if uiOpen then
+            if IsControlJustReleased(0, 322) or IsControlJustReleased(0, 177) then
+                hackingInProgress = false
+                loginStep = 0
+                SetNuiFocus(false, false)
+                stopHackAnimation()
+                SendNUIMessage({ action = "close" })
+                uiOpen = false
+            end
         end
     end
 end)
